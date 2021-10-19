@@ -64,11 +64,15 @@ public class UI {
             }
         }
     }
+
     private void executeCommand(Command command) {
         switch (command.getType()) {
             case MOVE -> {
-                int n = Integer.parseInt(command.getArgs().get(0));
-                move(n);
+                if (command.getArgs().isEmpty()) move(1);
+                else {
+                    int n = Integer.parseInt(command.getArgs().get(0));
+                    move(n);
+                }
             }
             case UP -> up();
             case DOWN -> down();
