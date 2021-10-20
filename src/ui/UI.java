@@ -42,7 +42,8 @@ public class UI {
         printBoard();
     }
 
-    //naspa
+    // naspa
+    // as fi preferat un Command pattern
     private void processCommands(Scanner in) {
         while (true) {
             System.out.print("Command");

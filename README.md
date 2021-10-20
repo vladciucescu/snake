@@ -12,5 +12,6 @@ Game stops when snake eats itself or hits the wall. A GAME OVER! is printed on t
 
 # Settings
 
-You can modify game settings in the `settings.properties` file. You can set the number of rows and columns on the board (`rows`,`columns`) and the number of apples (`appleCount`).
-If not set, the defaults are 6 for rows and columns and 3 for apple count.
+You can modify game settings in the `settings.properties` file. You can set the number of rows and columns on the board (`rows`,`columns`), the number of apples (`appleCount`) 
+and the starting coordinates for the snake (`startRow`,`startColumn`).
+If not set, the defaults are 6 for rows and columns, 3 for apple count and 4 for starting row and column.
