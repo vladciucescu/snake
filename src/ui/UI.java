@@ -1,15 +1,13 @@
 package ui;
 
-import domain.Board;
 import services.GameService;
 import utils.BoardUtils;
 import utils.Utils;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
-import static ui.CommandType.*;
+import static ui.CommandType.EXIT;
+import static ui.CommandType.INVALID;
 
 public class UI {
 
