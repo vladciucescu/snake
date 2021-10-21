@@ -7,9 +7,10 @@ import ui.UI;
 
 public class Game {
 
-    public static void main(String ...args) {
+    public static void main(String... args) {
         var snake = new Snake(Direction.UP);
-        var player = new Player(snake);
+        var board = new Board();
+        var player = new Player(snake, board);
         var gameService = new GameService(player);
         var ui = new UI(gameService);
         ui.run();

@@ -1,17 +1,30 @@
 package utils;
 
 import domain.Board;
+import domain.BoardObject;
 import domain.Coordinates;
 
 import java.util.Random;
 import java.util.function.BiPredicate;
 
 import static domain.BoardObject.APPLE;
+import static java.util.stream.Collectors.toList;
 
 public class BoardUtils {
 
     public static void printBoard(Board board) {
-
+        var header = "";
+        for (int columnIndex = 0; columnIndex < board.getColumnCount(); columnIndex++) {
+            var spacing = columnIndex < 9 ? "   " : "  ";
+            header += (columnIndex + 1) + spacing;
+        }
+        var grid = "     " + header;
+        for (int rowIndex = 0; rowIndex < board.getRowCount(); rowIndex++) {
+            var spacing = rowIndex < 9 ? "  | " : " | ";
+            var rowStrings = board.getRow(rowIndex).stream().map(BoardObject::getSymbol).collect(toList());
+            grid += "\n" + (rowIndex + 1) + spacing + String.join(" | ", rowStrings) + " | ";
+        }
+        System.out.println(grid);
     }
 
     public static Coordinates getNewAppleCoordinates(Board board, BiPredicate<Board, Coordinates> condition) {

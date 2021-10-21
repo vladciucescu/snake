@@ -2,11 +2,11 @@ package domain;
 
 public class Player {
 
-    private Board gameBoard;
+    private final Board gameBoard;
     private final Snake snake;
 
-    public Player(Snake snake) {
-        this.gameBoard = new Board();
+    public Player(Snake snake, Board board) {
+        this.gameBoard = board;
         this.snake = snake;
     }
 
@@ -16,12 +16,5 @@ public class Player {
 
     public Snake getSnake() {
         return snake;
-    }
-
-    public void setGameBoard(Board gameBoard) {
-        if (gameBoard == null) {
-            gameBoard = new Board();
-        }
-        this.gameBoard = gameBoard;
     }
 }

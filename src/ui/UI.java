@@ -46,7 +46,7 @@ public class UI {
     // as fi preferat un Command pattern
     private void processCommands(Scanner in) {
         while (true) {
-            System.out.print("Command");
+            System.out.print("Command: ");
             var command = Utils.parseCommand(in.nextLine());
             if (command.getType().equals(EXIT)) {
                 System.out.println(GOODBYE_MESSAGE);

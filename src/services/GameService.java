@@ -1,7 +1,10 @@
 package services;
 
 import config.Settings;
-import domain.*;
+import domain.Board;
+import domain.Coordinates;
+import domain.Player;
+import domain.Snake;
 import utils.BoardUtils;
 
 import static config.Defaults.DEFAULT_APPLE_COUNT;
@@ -29,8 +32,8 @@ public class GameService {
     }
 
     private void validateInitialPosition(Board board, Snake snake) {
-        int rows = board.getRows();
-        int columns = board.getColumns();
+        int rows = board.getRowCount();
+        int columns = board.getColumnCount();
         Coordinates snakeHead = snake.getHead();
         int rowIndex = snake.getDirection().getRowIndex();
         int columnIndex = snake.getDirection().getColumnIndex();

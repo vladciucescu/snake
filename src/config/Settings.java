@@ -16,7 +16,13 @@ public class Settings {
     private Integer rows;
     private Integer columns;
     private Integer appleCount;
-    private Coordinates startCordinates;
+    private Integer startRow;
+    private Integer startColumn;
+//    private String rows;
+//    private String columns;
+//    private String appleCount;
+//    private String startRowProp;
+//    private String startColumnProp
 
     private Settings() {
         if (instance != null) {
@@ -31,16 +37,22 @@ public class Settings {
             String appleCountProp = properties.getProperty("appleCount");
             String startRowProp = properties.getProperty("startRow");
             String startColumnProp = properties.getProperty("startColumn");
-            rows = Integer.valueOf(rowsProp);
-            columns = Integer.valueOf(columnsProp);
-            appleCount = Integer.valueOf(appleCountProp);
-            int startRow = Integer.parseInt(startRowProp);
-            int startColumn = Integer.parseInt(startColumnProp);
-            startCordinates = new Coordinates(startRow, startColumn);
-        } catch (IOException  e) {
+            rows = tryParseInt(rowsProp);
+            columns = tryParseInt(columnsProp);
+            appleCount = tryParseInt(appleCountProp);
+            startRow = tryParseInt(startRowProp);
+            startColumn = tryParseInt(startColumnProp);
+        } catch (IOException e) {
             System.out.println("Cannot read properties file.");
+        }
+    }
+
+    private Integer tryParseInt(String string) {
+        try {
+            return Integer.valueOf(string);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid properties.");
+            System.out.println("Invalid property value: " + string);
+            return null;
         }
     }
 
@@ -56,7 +68,12 @@ public class Settings {
         return Optional.ofNullable(appleCount);
     }
 
-    public Optional<Coordinates> getStartCoordinates() { return Optional.ofNullable(startCordinates); }
+    public Optional<Coordinates> getStartCoordinates() {
+        if (startRow == null || startColumn == null) {
+            return Optional.empty();
+        }
+        return Optional.of(new Coordinates(startRow, startColumn));
+    }
 
     public static Settings getInstance() {
         if (instance == null) return new Settings();

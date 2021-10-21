@@ -29,11 +29,11 @@ public class Board {
         return board;
     }
 
-    public int getRows() {
+    public int getRowCount() {
         return rows;
     }
 
-    public int getColumns() {
+    public int getColumnCount() {
         return columns;
     }
 
@@ -49,7 +49,7 @@ public class Board {
         var result = new ArrayList<Coordinates>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (board[i][j]==EMPTY) {
+                if (board[i][j] == EMPTY) {
                     result.add(new Coordinates(i, j));
                 }
             }
@@ -71,5 +71,9 @@ public class Board {
             }
         }
         return neighbours;
+    }
+
+    public List<BoardObject> getRow(int rowIndex) {
+        return List.of(board[rowIndex]);
     }
 }

@@ -18,7 +18,7 @@ public enum CommandType {
     private static final Map<String, CommandType> enumMap = Stream.of(CommandType.values()).collect(toMap(Enum::name, identity()));
 
     public static CommandType get(String value) {
-        return enumMap.getOrDefault(value, INVALID);
+        return enumMap.getOrDefault(value.toUpperCase(), INVALID);
     }
 
     private String menuOption;
