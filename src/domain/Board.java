@@ -61,13 +61,14 @@ public class Board {
         var neighbours = new ArrayList<Coordinates>();
         int row = coordinates.row();
         int column = coordinates.column();
-        for (var direction : Direction.values()) {
-            int rowIndex = direction.getRowIndex();
-            int columnIndex = direction.getColumnIndex();
-            int neighbourRow = row + rowIndex;
-            int neighbourColumn = column + columnIndex;
-            if (0 <= neighbourRow && neighbourRow < rows && 0 <= neighbourColumn && neighbourColumn < columns) {
-                neighbours.add(new Coordinates(neighbourRow, neighbourColumn));
+        for (var direction1 : Direction.values()) {
+            for (var direction2: Direction.values()) {
+                int rowIndex = direction1.getRowIndex();
+                int columnIndex = direction2.getColumnIndex();
+                Coordinates neighbour = new Coordinates(row + rowIndex,  column + columnIndex);
+                if (isOnBoard(neighbour)) {
+                    neighbours.add(neighbour);
+                }
             }
         }
         return neighbours;
@@ -75,5 +76,11 @@ public class Board {
 
     public List<BoardObject> getRow(int rowIndex) {
         return List.of(board[rowIndex]);
+    }
+
+    public boolean isOnBoard(Coordinates coordinates) {
+        int row = coordinates.row();
+        int column = coordinates.column();
+        return row < 0 || row >= rows || column < 0 || column >= columns;
     }
 }

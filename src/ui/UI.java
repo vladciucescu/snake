@@ -21,9 +21,9 @@ public class UI {
     }
 
     public void run() {
-        showMenu();
-        drawSnakeAndApples();
         try (var in = new Scanner(System.in)) {
+            showMenu();
+            drawSnakeAndApples();
             processCommands(in);
         } catch (Exception e) {
             Utils.handleException(e);

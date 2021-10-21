@@ -32,16 +32,13 @@ public class GameService {
     }
 
     private void validateInitialPosition(Board board, Snake snake) {
-        int rows = board.getRowCount();
-        int columns = board.getColumnCount();
         Coordinates snakeHead = snake.getHead();
         int rowIndex = snake.getDirection().getRowIndex();
         int columnIndex = snake.getDirection().getColumnIndex();
         for (int i = 0; i < 3; i++) {
-            int targetRow = snakeHead.row() + i * rowIndex;
-            int targetColumn = snakeHead.column() + i * columnIndex;
-            if (targetRow < 0 || targetRow >= rows || targetColumn < 0 || targetColumn >= columns) {
-                throw new RuntimeException("Cannot place snake.");
+            var nextPosition = new Coordinates(snakeHead.row() + i * rowIndex,  snakeHead.column() + i * columnIndex);
+            if (!board.isOnBoard(nextPosition)) {
+                throw new RuntimeException("There's not enough space to draw a snake given this start position and direction.");
             }
         }
     }
@@ -90,7 +87,13 @@ public class GameService {
     }
 
     private void validateMove(Board board, Snake snake) {
-        throw new RuntimeException("Invalid");
+        Coordinates nextPosition = snake.getNextHeadPosition();
+        if (!board.isOnBoard(nextPosition)) {
+            throw new RuntimeException("Game over - snake hits the wall!");
+        }
+        if (board.getBoardObject(nextPosition).equals(SNAKE_SEGMENT)) {
+            throw new RuntimeException("Game over - snake hits the snake!");
+        }
     }
 
     private void moveSnake1Step(Board board, Snake snake) {
