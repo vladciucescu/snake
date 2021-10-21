@@ -1,13 +1,11 @@
 package services;
 
-import config.Settings;
 import domain.Board;
 import domain.Coordinates;
 import domain.Player;
 import domain.Snake;
 import utils.BoardUtils;
 
-import static config.Defaults.DEFAULT_APPLE_COUNT;
 import static domain.BoardObject.APPLE;
 import static domain.BoardObject.SNAKE_SEGMENT;
 import static domain.Direction.*;
@@ -39,13 +37,10 @@ public class GameService {
         }
     }
 
-    public void placeApples() {
-        int appleCount = Settings.getInstance().getAppleCount().orElse(DEFAULT_APPLE_COUNT);
+    public void placeApple() {
         var board = player.getGameBoard();
-        for (int i = 0; i < appleCount; i++) {
-            var appleCoordinates = BoardUtils.getNewAppleCoordinates(board, BoardUtils::noAppleNeighbours);
-            board.setBoardObject(appleCoordinates, APPLE);
-        }
+        var appleCoordinates = BoardUtils.getNewAppleCoordinates(board, BoardUtils::noAppleNeighbours);
+        board.setBoardObject(appleCoordinates, APPLE);
     }
 
     public void moveUp() {
@@ -76,6 +71,7 @@ public class GameService {
             boolean eatApple = board.getBoardObject(snake.getNextHeadPosition()).equals(APPLE);
             if (eatApple) {
                 snake.growTail();
+                placeApple();
             }
             snake.move();
             board.placeSnake(snake);

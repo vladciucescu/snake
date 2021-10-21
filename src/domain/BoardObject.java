@@ -2,7 +2,7 @@ package domain;
 
 public enum BoardObject {
     EMPTY(" "),
-    APPLE("."),
+    APPLE("o"),
     SNAKE_HEAD("*"),
     SNAKE_SEGMENT("+");
 

@@ -39,7 +39,7 @@ public class UI {
 
     private void drawSnakeAndApples() {
         gameService.placeSnake();
-        gameService.placeApples();
+        gameService.placeApple();
         printBoard();
     }
 

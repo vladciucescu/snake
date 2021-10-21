@@ -15,14 +15,8 @@ public class Settings {
 
     private Integer rows;
     private Integer columns;
-    private Integer appleCount;
     private Integer startRow;
     private Integer startColumn;
-//    private String rows;
-//    private String columns;
-//    private String appleCount;
-//    private String startRowProp;
-//    private String startColumnProp
 
     private Settings() {
         if (instance != null) {
@@ -34,12 +28,10 @@ public class Settings {
             properties.load(inputStream);
             String rowsProp = properties.getProperty("rows");
             String columnsProp = properties.getProperty("columns");
-            String appleCountProp = properties.getProperty("appleCount");
             String startRowProp = properties.getProperty("startRow");
             String startColumnProp = properties.getProperty("startColumn");
             rows = tryParseInt(rowsProp);
             columns = tryParseInt(columnsProp);
-            appleCount = tryParseInt(appleCountProp);
             startRow = tryParseInt(startRowProp);
             startColumn = tryParseInt(startColumnProp);
         } catch (IOException e) {
@@ -62,10 +54,6 @@ public class Settings {
 
     public Optional<Integer> getColumns() {
         return Optional.ofNullable(columns);
-    }
-
-    public Optional<Integer> getAppleCount() {
-        return Optional.ofNullable(appleCount);
     }
 
     public Optional<Coordinates> getStartCoordinates() {
