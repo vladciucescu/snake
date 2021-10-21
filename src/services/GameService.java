@@ -47,7 +47,7 @@ public class GameService {
         int appleCount = Settings.getInstance().getAppleCount().orElse(DEFAULT_APPLE_COUNT);
         var board = player.getGameBoard();
         for (int i = 0; i < appleCount; i++) {
-            var appleCoordinates = BoardUtils.getNewAppleCoordinates(board);
+            var appleCoordinates = BoardUtils.getNewAppleCoordinates(board, BoardUtils::noApplesAround);
             board.setBoardObject(appleCoordinates, APPLE);
         }
     }

@@ -108,6 +108,6 @@ public class UI {
 
     private void printBoard() {
         var playerBoard = gameService.getPlayer().getGameBoard();
-        BoardUtils.printBoardV4(playerBoard);
+        BoardUtils.printBoard(playerBoard);
     }
 }
