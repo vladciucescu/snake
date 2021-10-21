@@ -1,11 +1,11 @@
 ### Snake Game
-A console-based version of the beloved [game of Snake](https://www.google.com/search?q=play+snake) using Python 3 and domain driven design.
+A console-based version of the beloved [game of Snake](https://www.google.com/search?q=play+snake) using OOP in Java.
 
 ## Play the game
 
 The user can move the snake using the following commands:
     - `move [n]`. This moves the snake `n` squares, in the direction it is currently facing. `move` with no parameters moves the snake by `1` square.
-    - `up | right | down | left` changes the snake's direction accordingly.
+    - `up | right | down | left` changes the snake orientation and moves the snake `1` square in the specified direction.
     - When the snake eats an apple, its tail grows by `1 square` and a new apple is added to the game area.
     
 Game stops when snake eats itself or hits the wall. A GAME OVER! is printed on the command line.
