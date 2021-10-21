@@ -43,7 +43,7 @@ public class BoardUtils {
         return randomPosition;
     }
 
-    public static boolean noApplesAround(Board board, Coordinates coordinates) {
+    public static boolean noAppleNeighbours(Board board, Coordinates coordinates) {
         for (Coordinates neighbour : board.getNeighbours(coordinates)) {
             if (board.getBoardObject(neighbour).equals(APPLE)) return false;
         }

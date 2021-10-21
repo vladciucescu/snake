@@ -21,7 +21,7 @@ public enum CommandType {
         return enumMap.getOrDefault(value.toUpperCase(), INVALID);
     }
 
-    private String menuOption;
+    private final String menuOption;
 
     CommandType(String menuOption) {
         this.menuOption = menuOption;

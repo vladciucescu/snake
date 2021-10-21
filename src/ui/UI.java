@@ -1,6 +1,7 @@
 package ui;
 
 import services.GameService;
+import services.InvalidMoveException;
 import utils.BoardUtils;
 import utils.Utils;
 
@@ -58,6 +59,9 @@ public class UI {
             }
             try {
                 executeCommand(command);
+            } catch (InvalidMoveException e) {
+                System.out.println("Game over - " + e.getMessage());
+                break;
             } catch (Exception e) {
                 Utils.handleException(e);
             }

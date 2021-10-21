@@ -33,10 +33,6 @@ public class Snake {
         this.direction = direction;
     }
 
-    public void addSegment(Coordinates coordinates) {
-        snakeSegments.addLast(coordinates);
-    }
-
     public Coordinates getHead() {
         return snakeSegments.getFirst();
     }
@@ -52,16 +48,8 @@ public class Snake {
         return new Coordinates(nextRow, nextColumn);
     }
 
-    public Coordinates getTail() {
-        return snakeSegments.getLast();
-    }
-
-    public void removeTail() {
-        snakeSegments.removeLast();
-    }
-
     public void growTail() {
-        Coordinates snakeTail = getTail();
+        Coordinates snakeTail = snakeSegments.getLast();
         Direction tailDirection = getTailDirection();
         int nextTailRow = snakeTail.row() + tailDirection.getRowIndex();
         int nextTailColumn = snakeTail.column() + tailDirection.getColumnIndex();
@@ -82,5 +70,10 @@ public class Snake {
         if (column1 == column2 && row1 > row2) return UP;
         if (column1 == column2 && row1 < row2) return DOWN;
         throw new RuntimeException("Invalid tail");
+    }
+
+    public void move() {
+        snakeSegments.addFirst(getNextHeadPosition());
+        snakeSegments.removeLast();
     }
 }

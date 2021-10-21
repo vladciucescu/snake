@@ -6,7 +6,7 @@ import config.Settings;
 import java.util.ArrayList;
 import java.util.List;
 
-import static domain.BoardObject.EMPTY;
+import static domain.BoardObject.*;
 
 public class Board {
     private final BoardObject[][] board;
@@ -61,15 +61,14 @@ public class Board {
         var neighbours = new ArrayList<Coordinates>();
         int row = coordinates.row();
         int column = coordinates.column();
-        for (var direction1 : Direction.values()) {
-            for (var direction2: Direction.values()) {
-                int rowIndex = direction1.getRowIndex();
-                int columnIndex = direction2.getColumnIndex();
-                Coordinates neighbour = new Coordinates(row + rowIndex,  column + columnIndex);
-                if (isOnBoard(neighbour)) {
-                    neighbours.add(neighbour);
-                }
+        for (var direction : Direction.values()) {
+            int rowIndex = direction.getRowIndex();
+            int columnIndex = direction.getColumnIndex();
+            Coordinates neighbour = new Coordinates(row + rowIndex, column + columnIndex);
+            if (isOnBoard(neighbour)) {
+                neighbours.add(neighbour);
             }
+
         }
         return neighbours;
     }
@@ -81,6 +80,22 @@ public class Board {
     public boolean isOnBoard(Coordinates coordinates) {
         int row = coordinates.row();
         int column = coordinates.column();
-        return row < 0 || row >= rows || column < 0 || column >= columns;
+        return 0 <= row && row < rows && 0 <= column && column < columns;
+    }
+
+    public void placeSnake(Snake snake) {
+        removeSnake();
+        setBoardObject(snake.getHead(), SNAKE_HEAD);
+        snake.getBody().forEach(coordinates -> setBoardObject(coordinates, SNAKE_SEGMENT));
+    }
+
+    private void removeSnake() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (board[i][j] == SNAKE_SEGMENT || board[i][j] == SNAKE_HEAD) {
+                    board[i][j] = EMPTY;
+                }
+            }
+        }
     }
 }

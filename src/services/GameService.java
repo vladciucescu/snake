@@ -8,7 +8,8 @@ import domain.Snake;
 import utils.BoardUtils;
 
 import static config.Defaults.DEFAULT_APPLE_COUNT;
-import static domain.BoardObject.*;
+import static domain.BoardObject.APPLE;
+import static domain.BoardObject.SNAKE_SEGMENT;
 import static domain.Direction.*;
 
 public class GameService {
@@ -27,8 +28,7 @@ public class GameService {
         var board = player.getGameBoard();
         var snake = player.getSnake();
         validateInitialPosition(board, snake);
-        board.setBoardObject(snake.getHead(), SNAKE_HEAD);
-        snake.getBody().forEach(coordinates -> board.setBoardObject(coordinates, SNAKE_SEGMENT));
+        board.placeSnake(snake);
     }
 
     private void validateInitialPosition(Board board, Snake snake) {
@@ -36,7 +36,7 @@ public class GameService {
         int rowIndex = snake.getDirection().getRowIndex();
         int columnIndex = snake.getDirection().getColumnIndex();
         for (int i = 0; i < 3; i++) {
-            var nextPosition = new Coordinates(snakeHead.row() + i * rowIndex,  snakeHead.column() + i * columnIndex);
+            var nextPosition = new Coordinates(snakeHead.row() + i * rowIndex, snakeHead.column() + i * columnIndex);
             if (!board.isOnBoard(nextPosition)) {
                 throw new RuntimeException("There's not enough space to draw a snake given this start position and direction.");
             }
@@ -47,7 +47,7 @@ public class GameService {
         int appleCount = Settings.getInstance().getAppleCount().orElse(DEFAULT_APPLE_COUNT);
         var board = player.getGameBoard();
         for (int i = 0; i < appleCount; i++) {
-            var appleCoordinates = BoardUtils.getNewAppleCoordinates(board, BoardUtils::noApplesAround);
+            var appleCoordinates = BoardUtils.getNewAppleCoordinates(board, BoardUtils::noAppleNeighbours);
             board.setBoardObject(appleCoordinates, APPLE);
         }
     }
@@ -77,28 +77,22 @@ public class GameService {
         var snake = player.getSnake();
         for (int i = 0; i < n; i++) {
             validateMove(board, snake);
-            moveSnake1Step(board, snake);
-            snake.removeTail();
-            if (board.getBoardObject(snake.getHead()).equals(APPLE)) {
+            boolean eatApple = board.getBoardObject(snake.getNextHeadPosition()).equals(APPLE);
+            if (eatApple) {
                 snake.growTail();
-                board.setBoardObject(snake.getHead(), APPLE);
             }
+            snake.move();
+            board.placeSnake(snake);
         }
     }
 
     private void validateMove(Board board, Snake snake) {
         Coordinates nextPosition = snake.getNextHeadPosition();
         if (!board.isOnBoard(nextPosition)) {
-            throw new RuntimeException("Game over - snake hits the wall!");
+            throw new InvalidMoveException("Snake hits the wall!");
         }
         if (board.getBoardObject(nextPosition).equals(SNAKE_SEGMENT)) {
-            throw new RuntimeException("Game over - snake hits the snake!");
+            throw new InvalidMoveException("Snake hits the snake!");
         }
-    }
-
-    private void moveSnake1Step(Board board, Snake snake) {
-        board.setBoardObject(snake.getHead(), SNAKE_SEGMENT);
-        board.setBoardObject(snake.getNextHeadPosition(), SNAKE_HEAD);
-        board.setBoardObject(snake.getTail(), EMPTY);
     }
 }
