@@ -21,7 +21,6 @@ public class Utils {
     }
 
     public static void handleException(Exception e) {
-        e.printStackTrace();
-        System.out.println(e + "\nPlease try again");
+        System.out.println(e.getMessage() + "\nPlease try again");
     }
 }
