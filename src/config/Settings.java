@@ -72,7 +72,7 @@ public class Settings {
         if (startRow == null || startColumn == null) {
             return Optional.empty();
         }
-        return Optional.of(new Coordinates(startRow, startColumn));
+        return Optional.of(new Coordinates(startRow - 1, startColumn - 1));
     }
 
     public static Settings getInstance() {

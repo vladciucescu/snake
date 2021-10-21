@@ -36,7 +36,7 @@ public class GameService {
         int rowIndex = snake.getDirection().getRowIndex();
         int columnIndex = snake.getDirection().getColumnIndex();
         for (int i = 0; i < 3; i++) {
-            var nextPosition = new Coordinates(snakeHead.row() + i * rowIndex, snakeHead.column() + i * columnIndex);
+            var nextPosition = new Coordinates(snakeHead.row() - i * rowIndex, snakeHead.column() - i * columnIndex);
             if (!board.isOnBoard(nextPosition)) {
                 throw new RuntimeException("There's not enough space to draw a snake given this start position and direction.");
             }
